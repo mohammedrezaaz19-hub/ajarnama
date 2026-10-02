@@ -2,42 +2,32 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سایت من</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 text-gray-800">
-
-    <!-- Navbar -->
-    <nav class="bg-blue-600 p-4 text-white shadow-lg">
-        <div class="container mx-auto flex justify-between">
-            <h1 class="font-bold text-xl">پروژه اجارنما</h1>
-            <ul class="flex gap-4">
-                <li><a href="#home" class="hover:underline">خانه</a></li>
-                <li><a href="#about" class="hover:underline">درباره ما</a></li>
-                <li><a href="#contact" class="hover:underline">تماس</a></li>
-            </ul>
+<body class="bg-gray-100 p-10">
+    <div class="max-w-md mx-auto bg-white p-6 rounded-xl shadow-lg text-center">
+        <h1 class="text-2xl font-bold mb-4">یک لحظه تأمل...</h1>
+        
+        <!-- جای نمایش شعر -->
+        <div id="quote-box" class="mb-6 p-4 border-r-4 border-blue-500 bg-gray-50">
+            <p id="quote-text" class="italic">دکمه زیر را بزن تا یک شعر برایت بخوانم.</p>
+            <p id="quote-author" class="font-bold mt-2 text-blue-600"></p>
         </div>
-    </nav>
 
-    <!-- Main Content -->
-    <main class="container mx-auto p-6">
-        <section id="home" class="bg-white p-8 rounded-lg shadow-md mb-6">
-            <h2 class="text-3xl font-bold mb-4">به سایت خوش آمدید</h2>
-            <p>این یک سایت مدرن است که با عشق ساخته شده.</p>
-        </section>
+        <button onclick="getQuote()" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+            شعر جدید
+        </button>
+    </div>
 
-        <section id="about" class="bg-white p-8 rounded-lg shadow-md mb-6">
-            <h2 class="text-2xl font-bold mb-4">درباره ما</h2>
-            <p>ما اینجا هستیم تا تکنولوژی و انسانیت را به هم گره بزنیم.</p>
-        </section>
-
-        <section id="contact" class="bg-white p-8 rounded-lg shadow-md">
-            <h2 class="text-2xl font-bold mb-4">تماس با ما</h2>
-            <p>راه‌های ارتباطی در آینده اضافه خواهد شد.</p>
-        </section>
-    </main>
-
+    <script>
+        async function getQuote() {
+            const res = await fetch('/api/quote');
+            const data = await res.json();
+            document.getElementById('quote-text').innerText = data.text;
+            document.getElementById('quote-author').innerText = data.author;
+        }
+    </script>
 </body>
 </html>
 
