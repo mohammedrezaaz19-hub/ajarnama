@@ -3,16 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سایت لوکس من</title>
+    <title>اجارنما | نسخه هنری</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- اضافه کردن فونت وزیرمتن -->
     <style>
+        @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-Variable-font-face.css');
+
         body {
-            /* پس‌زمینه گرادینت بنفش تیره */
+            font-family: 'Vazirmatn', sans-serif;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             min-height: 100vh;
         }
+
+        /* افکت انیمیشن */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-card {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
         .glass {
-            /* افکت شیشه‌ای (Glassmorphism) */
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
@@ -20,13 +33,11 @@
             border-radius: 24px;
         }
         .gold-text {
-            /* رنگ طلایی برای متن‌ها */
             background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .gold-button {
-            /* دکمه با استایل طلایی */
             background: linear-gradient(45deg, #bf953f, #fcf6ba);
             color: #1a1a2e;
             font-weight: bold;
@@ -41,7 +52,8 @@
 <body class="flex items-center justify-center">
 
     <main class="container mx-auto px-4 py-10">
-        <div class="max-w-lg mx-auto glass p-10 shadow-2xl text-center">
+        <!-- اضافه شدن کلاس animate-card -->
+        <div class="max-w-lg mx-auto glass p-10 shadow-2xl text-center animate-card">
             
             <h1 class="text-4xl font-extrabold mb-8 gold-text">اجارنما</h1>
             
@@ -61,10 +73,8 @@
 
     <script>
         async function getQuote() {
-            // اضافه کردن یک افکت ساده موقع لود شدن
             document.getElementById('quote-text').innerText = "...";
             document.getElementById('quote-author').innerText = "";
-            
             try {
                 const res = await fetch('/api/quote');
                 const data = await res.json();
