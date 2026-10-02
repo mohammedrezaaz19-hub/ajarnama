@@ -2,30 +2,77 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>سایت من</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سایت لوکس من</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            /* پس‌زمینه گرادینت بنفش تیره */
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+        }
+        .glass {
+            /* افکت شیشه‌ای (Glassmorphism) */
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+        }
+        .gold-text {
+            /* رنگ طلایی برای متن‌ها */
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-button {
+            /* دکمه با استایل طلایی */
+            background: linear-gradient(45deg, #bf953f, #fcf6ba);
+            color: #1a1a2e;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .gold-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(191, 149, 63, 0.5);
+        }
+    </style>
 </head>
-<body class="bg-gray-100 p-10">
-    <div class="max-w-md mx-auto bg-white p-6 rounded-xl shadow-lg text-center">
-        <h1 class="text-2xl font-bold mb-4">یک لحظه تأمل...</h1>
-        
-        <!-- جای نمایش شعر -->
-        <div id="quote-box" class="mb-6 p-4 border-r-4 border-blue-500 bg-gray-50">
-            <p id="quote-text" class="italic">دکمه زیر را بزن تا یک شعر برایت بخوانم.</p>
-            <p id="quote-author" class="font-bold mt-2 text-blue-600"></p>
-        </div>
+<body class="flex items-center justify-center">
 
-        <button onclick="getQuote()" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
-            شعر جدید
-        </button>
-    </div>
+    <main class="container mx-auto px-4 py-10">
+        <div class="max-w-lg mx-auto glass p-10 shadow-2xl text-center">
+            
+            <h1 class="text-4xl font-extrabold mb-8 gold-text">اجارنما</h1>
+            
+            <div id="quote-box" class="mb-10 min-h-[120px] flex flex-col justify-center">
+                <p id="quote-text" class="text-xl text-gray-200 leading-relaxed italic">
+                    منتظر شنیدن کلام هستم...
+                </p>
+                <p id="quote-author" class="mt-4 text-lg gold-text font-semibold"></p>
+            </div>
+
+            <button onclick="getQuote()" class="gold-button w-full py-4 rounded-xl text-lg shadow-lg">
+                شعر جدید را بخوان
+            </button>
+
+        </div>
+    </main>
 
     <script>
         async function getQuote() {
-            const res = await fetch('/api/quote');
-            const data = await res.json();
-            document.getElementById('quote-text').innerText = data.text;
-            document.getElementById('quote-author').innerText = data.author;
+            // اضافه کردن یک افکت ساده موقع لود شدن
+            document.getElementById('quote-text').innerText = "...";
+            document.getElementById('quote-author').innerText = "";
+            
+            try {
+                const res = await fetch('/api/quote');
+                const data = await res.json();
+                document.getElementById('quote-text').innerText = data.text;
+                document.getElementById('quote-author').innerText = data.author;
+            } catch (e) {
+                document.getElementById('quote-text').innerText = "خطا در اتصال به سرور";
+            }
         }
     </script>
 </body>
