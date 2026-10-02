@@ -3,101 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اجرنما | نسخه اصلی</title>
+    <title>اجرنما | وب‌اپلیکیشن</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-Variable-font-face.css');
-
-        body {
-            font-family: 'Vazirmatn', sans-serif;
-            background: radial-gradient(circle at center, #24243e 0%, #0f0c29 100%);
-            background-image: radial-gradient(white 1px, transparent 1px);
-            background-size: 40px 40px;
-            min-height: 100vh;
-            transition: all 0.5s ease;
-        }
-
-        .light-mode {
-            background: #f8fafc !important;
-            background-image: none !important;
-            color: #1e293b;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-card { animation: fadeInUp 0.8s ease-out forwards; }
-
-        .glass {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-        }
+        body { font-family: 'Vazirmatn', sans-serif; background: radial-gradient(circle at center, #24243e 0%, #0f0c29 100%); min-height: 100vh; transition: all 0.3s; color: white; }
+        .light-mode { background: #f8fafc !important; color: #1e293b; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; }
         .light-mode .glass { background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1); }
-        
-        .gold-text {
-            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        .gold-text { background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-btn { transition: 0.3s; padding: 8px 12px; border-radius: 10px; font-size: 12px; }
+        .nav-btn:hover { background: rgba(255,255,255,0.1); }
+        .fade-in { animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
-<body class="text-white flex items-center justify-center p-4">
+<body class="p-4">
 
-    <button onclick="toggleTheme()" class="absolute top-5 left-5 p-3 rounded-full bg-white/10 hover:bg-white/20 transition">
-        🌓
-    </button>
+    <!-- منوی ناوبری -->
+    <nav class="glass mb-6 p-3 flex flex-wrap gap-2 justify-center shadow-lg">
+        <button onclick="renderPage('home')" class="nav-btn">خانه</button>
+        <button onclick="renderPage('services')" class="nav-btn">خدمات</button>
+        <button onclick="renderPage('portfolio')" class="nav-btn">نمونه‌کار</button>
+        <button onclick="renderPage('team')" class="nav-btn">تیم ما</button>
+        <button onclick="renderPage('wisdom')" class="nav-btn">حکمت</button>
+        <button onclick="renderPage('blog')" class="nav-btn">وبلاگ</button>
+        <button onclick="renderPage('contact')" class="nav-btn">تماس</button>
+        <button onclick="renderPage('ads')" class="nav-btn">تبلیغات</button>
+        <button onclick="toggleTheme()" class="nav-btn">🌓</button>
+    </nav>
 
-    <main class="container mx-auto max-w-lg">
-        <div class="glass p-8 shadow-2xl text-center animate-card">
-            
-            <div class="mb-10 border-b border-white/10 pb-6">
-                <h1 class="text-3xl font-bold mb-4 gold-text">اجرنما</h1>
-                <p class="text-sm text-gray-400 leading-relaxed">
-                    این سایت توسط هوش مصنوعی و بهترین هکر جهان ساخته شده <br>
-                    <span class="text-amber-500 font-bold text-base">تقدیم به آقای ایمان سیاه منصوری</span>
-                </p>
-            </div>
-            
-            <div id="quote-box" class="mb-10 min-h-[120px] flex flex-col justify-center">
-                <p id="quote-text" class="text-xl leading-relaxed italic">
-                    در انتظار کلام...
-                </p>
-                <p id="quote-author" class="mt-4 text-md gold-text font-semibold"></p>
-            </div>
-
-            <button onclick="getQuote()" class="bg-gradient-to-r from-amber-500 to-yellow-600 w-full py-3 rounded-xl text-black font-bold shadow-lg hover:scale-105 transition">
-                شعر جدید
-            </button>
-
-        </div>
+    <!-- محتوای اصلی -->
+    <main id="app-container" class="container mx-auto max-w-lg glass p-8 shadow-2xl min-h-[400px] fade-in">
+        <!-- محتوا اینجا لود میشه -->
     </main>
 
     <script>
-        function toggleTheme() {
-            document.body.classList.toggle('light-mode');
+        const pages = {
+            home: `<h1>اجرنما</h1><p class="text-gray-400">این سایت توسط هوش مصنوعی و بهترین هکر جهان ساخته شده تقدیم به آقای ایمان سیاه منصوری</p>`,
+            services: `<h2>خدمات ما</h2><p>لیست خدمات شرکت اجرنما اینجا قرار می‌گیرد...</p>`,
+            portfolio: `<h2>نمونه‌کارها</h2><p>پروژه‌های اجرایی ما...</p>`,
+            team: `<h2>تیم ما</h2><p>اعضای تیم اجرنما...</p>`,
+            wisdom: `<h2>شعر و حکمت</h2><p>بخش ادبی سایت...</p>`,
+            blog: `<h2>وبلاگ</h2><p>جدیدترین اخبار...</p>`,
+            contact: `<h2>تماس با ما</h2><p>راه‌های ارتباطی...</p>`,
+            ads: `<h2>تبلیغات و حامیان</h2><p>بخش تبلیغات...</p>`
+        };
+
+        function renderPage(pageId) {
+            const container = document.getElementById('app-container');
+            container.classList.remove('fade-in');
+            void container.offsetWidth; // ریست انیمیشن
+            container.classList.add('fade-in');
+            container.innerHTML = `<div class="gold-text font-bold text-2xl mb-4">${pageId.toUpperCase()}</div>` + pages[pageId];
         }
 
-        async function getQuote() {
-            const quoteEl = document.getElementById('quote-text');
-            quoteEl.innerText = "...";
-            try {
-                const res = await fetch('/api/quote');
-                const data = await res.json();
-                quoteEl.innerText = data.text;
-                quoteEl.innerText = data.text;
-                quoteEl.innerText = data.text;
-                quoteEl.innerText = data.text;
-                quoteEl.innerText = data.text;
-                document.getElementById('quote-author').innerText = data.author;
-            } catch (e) {
-                quoteEl.innerText = "خطا در اتصال";
-            }
-        }
+        function toggleTheme() { document.body.classList.toggle('light-mode'); }
+
+        // لود صفحه اول به صورت پیش‌فرض
+        renderPage('home');
     </script>
 </body>
 </html>
