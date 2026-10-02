@@ -1,22 +1,21 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
+	"fmt"
 	"os"
 )
 
 func main() {
-	// این هندلر برای "همه مسیرها" است
+	// این خط به سرور میگه وقتی کسی وارد شد، فایل index.html رو نشون بده
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "سلام! سایت اجرنما بالا آمد. مسیر فعلی: %s", r.URL.Path)
+		http.ServeFile(w, r, "index.html")
 	})
 
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 	}
-
-	fmt.Println("Server starting on port", port)
+	fmt.Println("Server is running on port", port)
 	http.ListenAndServe(":"+port, nil)
 }
